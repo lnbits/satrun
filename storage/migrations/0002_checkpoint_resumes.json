@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "operations": [
+    {
+      "op": "add_field",
+      "table": "receipts",
+      "field": "run_id",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "op": "add_field",
+      "table": "run_nodes",
+      "field": "resume_key",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "op": "create_index",
+      "table": "run_nodes",
+      "name": "run_nodes_resume_key",
+      "field": "resume_key"
+    }
+  ]
+}

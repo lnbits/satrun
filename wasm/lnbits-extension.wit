@@ -1,0 +1,44 @@
+package lnbits:extension;
+interface host {
+ record get-request { table: string, id: string }
+ record get-response { data-json: option<string> }
+ record set-request { table: string, data-json: string }
+ record set-response { ok: bool }
+ record append-request { table: string, source-id: string, data-json: string }
+ record append-response { id: string }
+ record list-request { table: string, source-id: string, filters-json: string, search: string, search-fields: list<string>, sort-by: string, descending: bool, limit: u32, offset: u32 }
+ record owner-list-request { table: string, filters-json: string, search: string, search-fields: list<string>, sort-by: string, descending: bool, limit: u32, offset: u32 }
+ record list-response { rows-json: string, total: u64 }
+ record id-request { prefix: string }
+ record id-response { id: string }
+ record now-response { timestamp: u64 }
+ record wallet { id: string, name: string, currency: option<string> }
+ record wallets-response { wallets: list<wallet> }
+ record invoice-request { source-id: string, amount: f64, currency: string, memo: string, extra: list<tuple<string,string>> }
+ record invoice-response { payment-hash: string, payment-request: string, checking-id: string }
+ storage-append-public: func(request: append-request) -> append-response;
+ storage-get-paginated: func(request: owner-list-request) -> list-response;
+ storage-get-public-paginated: func(request: list-request) -> list-response;
+ storage-get: func(request: get-request) -> get-response;
+ storage-get-public: func(request: get-request) -> get-response;
+ storage-set: func(request: set-request) -> set-response;
+ random-id: func(request: id-request) -> id-response;
+ now: func() -> now-response;
+ list-user-wallets: func() -> wallets-response;
+ create-invoice-public: func(request: invoice-request) -> invoice-response;
+}
+world satrun {
+ import host;
+ export begin-run: func(request-json: string) -> string;
+ export verify-run: func(request-json: string) -> string;
+ export finish-run: func(request-json: string) -> string;
+ export leaderboard: func(request-json: string) -> string;
+ export game-info: func(request-json: string) -> string;
+ export get-record: func(request-json: string) -> string;
+ export save-record: func(request-json: string) -> string;
+ export operator-config: func(request-json: string) -> string;
+ export tower-info: func(request-json: string) -> string;
+ export continue-invoice: func(request-json: string) -> string;
+ export continue-status: func(request-json: string) -> string;
+ export invoice-paid: func(request-json: string) -> string;
+}

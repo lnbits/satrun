@@ -1,0 +1,69 @@
+name: Build WASM extension
+
+on:
+  workflow_call:
+  push:
+    branches-ignore: [main]
+    tags-ignore: ['**']
+    paths:
+      - 'config.json'
+      - 'manifest.json'
+      - '.gitattributes'
+      - 'dev/**'
+      - 'static/**'
+      - 'ui/**'
+      - 'wasm/**'
+      - 'storage/**'
+      - 'LICENSE'
+      - 'THIRD-PARTY-NOTICES.txt'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'config.json'
+      - 'manifest.json'
+      - '.gitattributes'
+      - 'dev/**'
+      - 'static/**'
+      - 'ui/**'
+      - 'wasm/**'
+      - 'storage/**'
+      - 'LICENSE'
+      - 'THIRD-PARTY-NOTICES.txt'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check release gate
+        run: python3 dev/check-release.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: dev/package-lock.json
+
+      - name: Install dependencies
+        run: npm --prefix dev ci
+
+      - name: Build browser bundle and WebAssembly component
+        run: npm --prefix dev run build
+
+      - name: Test game and component contract
+        run: |
+          npm --prefix dev test
+          node dev/recovery-check.mjs
+
+      - name: Package and inspect install archive
+        run: python3 dev/package-release.py
+
+      - name: Check committed browser bundle is current
+        # ponytail: jco bytes vary across toolchains; tests check the component
+        # packaging checks the header and archived/source component hash parity.
+        run: git diff --exit-code -- static/game.js

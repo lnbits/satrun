@@ -1,0 +1,8 @@
+dev/node_modules/
+dev/dist/
+dev/.instance/
+dev/.pg-instance/
+evidence/*
+!evidence/VERIFICATION.md
+dist/
+dev/pg-check.log

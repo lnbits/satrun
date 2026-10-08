@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "operations": [
+    {
+      "op": "add_field",
+      "table": "run_nodes",
+      "field": "signing_key",
+      "type": "string",
+      "default": ""
+    }
+  ]
+}

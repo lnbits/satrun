@@ -1,0 +1,290 @@
+{
+  "id": "satrun",
+  "name": "Sat Run",
+  "short_description": "Climb the light circuit. Outrun the void. One more floor.",
+  "version": "0.1.0",
+  "extension_type": "wasm",
+  "tile": "/ext-assets/satrun/assets/icon.png",
+  "wasm": {
+    "module": "wasm/module.wasm",
+    "wit": "wasm/lnbits-extension.wit",
+    "world": "satrun",
+    "exports": [
+      {
+        "name": "game-info",
+        "visibility": "public"
+      },
+      {
+        "name": "get-record",
+        "visibility": "authenticated"
+      },
+      {
+        "name": "save-record",
+        "visibility": "authenticated"
+      },
+      {
+        "name": "operator-config",
+        "visibility": "authenticated"
+      },
+      {
+        "name": "tower-info",
+        "visibility": "public"
+      },
+      {
+        "name": "begin-run",
+        "visibility": "public"
+      },
+      {
+        "name": "verify-run",
+        "visibility": "public"
+      },
+      {
+        "name": "finish-run",
+        "visibility": "public"
+      },
+      {
+        "name": "leaderboard",
+        "visibility": "public"
+      },
+      {
+        "name": "continue-invoice",
+        "visibility": "public"
+      },
+      {
+        "name": "continue-status",
+        "visibility": "public"
+      },
+      {
+        "name": "invoice-paid",
+        "visibility": "event"
+      }
+    ]
+  },
+  "events": {
+    "onInvoicePaid": "invoice-paid"
+  },
+  "ui_routes": [
+    {
+      "path": "/satrun",
+      "entrypoint": "ui/admin.html",
+      "auth": "user"
+    },
+    {
+      "path": "/satrun/me",
+      "entrypoint": "ui/public.html",
+      "auth": "user"
+    },
+    {
+      "path": "/satrun/play",
+      "entrypoint": "ui/public.html",
+      "auth": "public"
+    },
+    {
+      "path": "/satrun/t/{tower_id}",
+      "entrypoint": "ui/public.html",
+      "auth": "public",
+      "path_params": {
+        "tower_id": "towerId"
+      }
+    }
+  ],
+  "api_routes": [
+    {
+      "method": "GET",
+      "path": "/info",
+      "export": "game-info",
+      "auth": "public"
+    },
+    {
+      "method": "GET",
+      "path": "/record",
+      "export": "get-record",
+      "auth": "user"
+    },
+    {
+      "method": "POST",
+      "path": "/record",
+      "export": "save-record",
+      "auth": "user"
+    },
+    {
+      "method": "GET",
+      "path": "/operator",
+      "export": "operator-config",
+      "auth": "user"
+    },
+    {
+      "method": "POST",
+      "path": "/operator",
+      "export": "operator-config",
+      "auth": "user"
+    },
+    {
+      "method": "POST",
+      "path": "/tower",
+      "export": "tower-info",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/run/start",
+      "export": "begin-run",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/run/verify",
+      "export": "verify-run",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/run/finish",
+      "export": "finish-run",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/leaderboard",
+      "export": "leaderboard",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/continue",
+      "export": "continue-invoice",
+      "auth": "public"
+    },
+    {
+      "method": "POST",
+      "path": "/continue/status",
+      "export": "continue-status",
+      "auth": "public"
+    }
+  ],
+  "permissions": [
+    {
+      "id": "ext.storage.read"
+    },
+    {
+      "id": "ext.storage.write"
+    },
+    {
+      "id": "wallet.list"
+    },
+    {
+      "id": "ext.storage.read_public",
+      "policies": [
+        {
+          "table_name": "towers",
+          "public_fields": [
+            "id",
+            "source_id",
+            "continue_enabled",
+            "continue_price",
+            "checkpoint_frequency",
+            "difficulty",
+            "daily_challenge",
+            "leaderboard_enabled"
+          ]
+        },
+        {
+          "table_name": "invoice_sources",
+          "public_fields": [
+            "id",
+            "tower_id",
+            "price",
+            "frequency"
+          ]
+        },
+        {
+          "table_name": "receipts",
+          "public_fields": [
+            "id",
+            "tower_id",
+            "checkpoint",
+            "run_id"
+          ]
+        },
+        {
+          "table_name": "run_nodes",
+          "public_fields": [
+            "id",
+            "tower_id",
+            "token",
+            "root_id",
+            "day",
+            "started",
+            "name",
+            "state_json",
+            "resume_key"
+          ],
+          "source_id_field": "tower_id"
+        },
+        {
+          "table_name": "scores",
+          "public_fields": [
+            "id",
+            "tower_id",
+            "root_id",
+            "day",
+            "name",
+            "floor",
+            "time_ms",
+            "score",
+            "rank_key",
+            "rules"
+          ],
+          "source_id_field": "tower_id"
+        }
+      ]
+    },
+    {
+      "id": "ext.storage.append_public",
+      "policies": [
+        {
+          "table": "run_nodes",
+          "source_table": "towers",
+          "source_id_field": "tower_id",
+          "allowed_fields": [
+            "token",
+            "root_id",
+            "day",
+            "started",
+            "name",
+            "state_json",
+            "resume_key",
+            "signing_key"
+          ],
+          "max_rows_per_source": 1000000
+        },
+        {
+          "table": "scores",
+          "source_table": "towers",
+          "source_id_field": "tower_id",
+          "allowed_fields": [
+            "root_id",
+            "day",
+            "name",
+            "floor",
+            "time_ms",
+            "score",
+            "rank_key",
+            "rules"
+          ],
+          "max_rows_per_source": 1000000
+        }
+      ]
+    },
+    {
+      "id": "wallet.create_invoice_public",
+      "policies": [
+        {
+          "table": "invoice_sources",
+          "wallet_field": "wallet_id"
+        }
+      ]
+    }
+  ],
+  "openapi": "wasm/openapi.json"
+}

@@ -1,0 +1,2368 @@
+{
+  "commit": "b717d51d7b6c099cb5cb4d730e59c6aa720e5365",
+  "config_schema": {
+    "definitions": {
+      "ExtensionPermission": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "policies": {
+            "items": {},
+            "title": "Policies",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "ExtensionPermission",
+        "type": "object"
+      },
+      "WasmAPIRouteConfig": {
+        "properties": {
+          "auth": {
+            "enum": [
+              "public",
+              "user"
+            ],
+            "title": "Auth",
+            "type": "string"
+          },
+          "export": {
+            "title": "Export",
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "DELETE",
+              "GET",
+              "PATCH",
+              "POST",
+              "PUT"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "openapi": {
+            "title": "Openapi",
+            "type": "string"
+          },
+          "ownerContext": {
+            "$ref": "#/definitions/WasmRouteOwnerContext"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "path_params": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Path Params",
+            "type": "object"
+          }
+        },
+        "required": [
+          "method",
+          "path",
+          "export",
+          "auth"
+        ],
+        "title": "WasmAPIRouteConfig",
+        "type": "object"
+      },
+      "WasmEventsConfig": {
+        "properties": {
+          "onInvoicePaid": {
+            "title": "Oninvoicepaid",
+            "type": "string"
+          }
+        },
+        "title": "WasmEventsConfig",
+        "type": "object"
+      },
+      "WasmExtensionExport": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "visibility": {
+            "enum": [
+              "authenticated",
+              "event",
+              "public"
+            ],
+            "title": "Visibility",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "visibility"
+        ],
+        "title": "WasmExtensionExport",
+        "type": "object"
+      },
+      "WasmRouteOwnerContext": {
+        "properties": {
+          "idParam": {
+            "title": "Idparam",
+            "type": "string"
+          },
+          "table": {
+            "title": "Table",
+            "type": "string"
+          }
+        },
+        "required": [
+          "table",
+          "idParam"
+        ],
+        "title": "WasmRouteOwnerContext",
+        "type": "object"
+      },
+      "WasmRuntimeConfig": {
+        "properties": {
+          "exports": {
+            "items": {
+              "$ref": "#/definitions/WasmExtensionExport"
+            },
+            "title": "Exports",
+            "type": "array"
+          },
+          "module": {
+            "title": "Module",
+            "type": "string"
+          },
+          "wit": {
+            "title": "Wit",
+            "type": "string"
+          },
+          "world": {
+            "default": "",
+            "title": "World",
+            "type": "string"
+          }
+        },
+        "required": [
+          "module"
+        ],
+        "title": "WasmRuntimeConfig",
+        "type": "object"
+      },
+      "WasmSDKConfig": {
+        "properties": {
+          "frontend_js": {
+            "title": "Frontend Js",
+            "type": "string"
+          }
+        },
+        "title": "WasmSDKConfig",
+        "type": "object"
+      },
+      "WasmUIConfig": {
+        "properties": {
+          "entrypoint": {
+            "title": "Entrypoint",
+            "type": "string"
+          },
+          "sandbox": {
+            "title": "Sandbox",
+            "type": "boolean"
+          }
+        },
+        "title": "WasmUIConfig",
+        "type": "object"
+      },
+      "WasmUIRouteConfig": {
+        "properties": {
+          "auth": {
+            "enum": [
+              "public",
+              "user"
+            ],
+            "title": "Auth",
+            "type": "string"
+          },
+          "entrypoint": {
+            "title": "Entrypoint",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "path_params": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Path Params",
+            "type": "object"
+          }
+        },
+        "required": [
+          "path",
+          "entrypoint",
+          "auth"
+        ],
+        "title": "WasmUIRouteConfig",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "api_routes": {
+        "items": {
+          "$ref": "#/definitions/WasmAPIRouteConfig"
+        },
+        "title": "Api Routes",
+        "type": "array"
+      },
+      "events": {
+        "$ref": "#/definitions/WasmEventsConfig"
+      },
+      "extension_type": {
+        "enum": [
+          "wasm"
+        ],
+        "title": "Extension Type",
+        "type": "string"
+      },
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "max_lnbits_version": {
+        "title": "Max Lnbits Version",
+        "type": "string"
+      },
+      "min_lnbits_version": {
+        "title": "Min Lnbits Version",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "openapi": {
+        "title": "Openapi",
+        "type": "string"
+      },
+      "permissions": {
+        "items": {
+          "$ref": "#/definitions/ExtensionPermission"
+        },
+        "title": "Permissions",
+        "type": "array"
+      },
+      "sdk": {
+        "$ref": "#/definitions/WasmSDKConfig"
+      },
+      "short_description": {
+        "title": "Short Description",
+        "type": "string"
+      },
+      "tile": {
+        "title": "Tile",
+        "type": "string"
+      },
+      "ui": {
+        "$ref": "#/definitions/WasmUIConfig"
+      },
+      "ui_routes": {
+        "items": {
+          "$ref": "#/definitions/WasmUIRouteConfig"
+        },
+        "title": "Ui Routes",
+        "type": "array"
+      },
+      "version": {
+        "title": "Version",
+        "type": "string"
+      },
+      "wasm": {
+        "$ref": "#/definitions/WasmRuntimeConfig"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "short_description",
+      "version",
+      "extension_type",
+      "wasm"
+    ],
+    "title": "WasmExtensionConfig",
+    "type": "object"
+  },
+  "describe": "v1.6.2-rc1-25-gb717d51d7-dirty",
+  "host_api": {
+    "methods": [
+      {
+        "description": "Call an allowed installed extension API.",
+        "host_interface": "host",
+        "host_name": "extension_api_request",
+        "id": "extension.api.request",
+        "name": "Extension API request",
+        "namespace": "extension",
+        "python_name": "extension_api_request",
+        "request_schema": {
+          "properties": {
+            "body": {
+              "maxLength": 65536,
+              "title": "Body",
+              "type": "string"
+            },
+            "extension_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Extension Id",
+              "type": "string"
+            },
+            "method": {
+              "default": "GET",
+              "enum": [
+                "DELETE",
+                "GET",
+                "HEAD",
+                "PATCH",
+                "POST",
+                "PUT"
+              ],
+              "title": "Method",
+              "type": "string"
+            },
+            "path": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "title": "Path",
+              "type": "string"
+            }
+          },
+          "required": [
+            "extension_id",
+            "path"
+          ],
+          "title": "ExtensionApiRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "extension.api.request",
+        "response_schema": {
+          "properties": {
+            "body": {
+              "default": "",
+              "title": "Body",
+              "type": "string"
+            },
+            "headers": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Headers",
+              "type": "object"
+            },
+            "status_code": {
+              "title": "Status Code",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "status_code"
+          ],
+          "title": "HttpResponse",
+          "type": "object"
+        },
+        "sdk_name": "request",
+        "sdk_qualified_name": "extension.request"
+      },
+      {
+        "description": "Make an outbound HTTP request to an allowed host.",
+        "host_interface": "host",
+        "host_name": "http_request",
+        "id": "http.request",
+        "name": "HTTP request",
+        "namespace": "http",
+        "python_name": "http_request",
+        "request_schema": {
+          "properties": {
+            "body": {
+              "maxLength": 65536,
+              "title": "Body",
+              "type": "string"
+            },
+            "headers": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Headers",
+              "type": "object"
+            },
+            "method": {
+              "default": "GET",
+              "enum": [
+                "DELETE",
+                "GET",
+                "HEAD",
+                "PATCH",
+                "POST",
+                "PUT"
+              ],
+              "title": "Method",
+              "type": "string"
+            },
+            "url": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "title": "Url",
+              "type": "string"
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "title": "HttpRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "http.request",
+        "response_schema": {
+          "properties": {
+            "body": {
+              "default": "",
+              "title": "Body",
+              "type": "string"
+            },
+            "headers": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Headers",
+              "type": "object"
+            },
+            "status_code": {
+              "title": "Status Code",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "status_code"
+          ],
+          "title": "HttpResponse",
+          "type": "object"
+        },
+        "sdk_name": "request",
+        "sdk_qualified_name": "http.request"
+      },
+      {
+        "description": "Send a notification to the current user or the invocation's wallet owner, using their saved settings for the selected email, Nostr, or Telegram notification type. Queued does not guarantee delivery.",
+        "host_interface": "host",
+        "host_name": "notifications_send_user_notification",
+        "id": "notifications.send_user_notification",
+        "name": "Send user notification",
+        "namespace": "notifications",
+        "python_name": "notifications_send_user_notification",
+        "request_schema": {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "maxLength": 4096,
+              "minLength": 1,
+              "title": "Message",
+              "type": "string"
+            },
+            "type": {
+              "enum": [
+                "email",
+                "nostr",
+                "telegram"
+              ],
+              "title": "Type",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "message"
+          ],
+          "title": "SendUserNotificationRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "notifications.send_user_notification",
+        "response_schema": {
+          "properties": {
+            "queued": {
+              "default": true,
+              "title": "Queued",
+              "type": "boolean"
+            }
+          },
+          "title": "SendUserNotificationResponse",
+          "type": "object"
+        },
+        "sdk_name": "sendUserNotification",
+        "sdk_qualified_name": "notifications.sendUserNotification"
+      },
+      {
+        "description": "Append one public row to an extension storage table.",
+        "host_interface": "host",
+        "host_name": "storage_append_public",
+        "id": "storage.append_public",
+        "name": "Append public storage row",
+        "namespace": "storage",
+        "python_name": "storage_append_public",
+        "request_schema": {
+          "properties": {
+            "data": {
+              "title": "Data",
+              "type": "object"
+            },
+            "source_id": {
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Source Id",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table",
+            "source_id"
+          ],
+          "title": "StorageAppendPublicRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "ext.storage.append_public",
+        "response_schema": {
+          "properties": {
+            "id": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "title": "StorageAppendPublicResponse",
+          "type": "object"
+        },
+        "sdk_name": "appendPublic",
+        "sdk_qualified_name": "storage.appendPublic"
+      },
+      {
+        "description": "Delete one row from an extension storage table.",
+        "host_interface": "host",
+        "host_name": "storage_delete",
+        "id": "storage.delete",
+        "name": "Delete storage row",
+        "namespace": "storage",
+        "python_name": "storage_delete",
+        "request_schema": {
+          "properties": {
+            "id": {
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Id",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table",
+            "id"
+          ],
+          "title": "StorageDeleteRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "ext.storage.write",
+        "response_schema": {
+          "properties": {
+            "ok": {
+              "default": true,
+              "title": "Ok",
+              "type": "boolean"
+            }
+          },
+          "title": "StorageDeleteResponse",
+          "type": "object"
+        },
+        "sdk_name": "delete",
+        "sdk_qualified_name": "storage.delete"
+      },
+      {
+        "description": "Read one row from an extension storage table.",
+        "host_interface": "host",
+        "host_name": "storage_get",
+        "id": "storage.get",
+        "name": "Get storage row",
+        "namespace": "storage",
+        "python_name": "storage_get",
+        "request_schema": {
+          "properties": {
+            "id": {
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Id",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table",
+            "id"
+          ],
+          "title": "StorageGetRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "ext.storage.read",
+        "response_schema": {
+          "properties": {
+            "data_json": {
+              "title": "Data Json",
+              "type": "string"
+            }
+          },
+          "title": "StorageGetResponse",
+          "type": "object"
+        },
+        "sdk_name": "get",
+        "sdk_qualified_name": "storage.get"
+      },
+      {
+        "description": "Get filtered, searched, sorted, paginated storage rows.",
+        "host_interface": "host",
+        "host_name": "storage_get_paginated",
+        "id": "storage.get_paginated",
+        "name": "Get paginated storage rows",
+        "namespace": "storage",
+        "python_name": "storage_get_paginated",
+        "request_schema": {
+          "properties": {
+            "descending": {
+              "default": false,
+              "title": "Descending",
+              "type": "boolean"
+            },
+            "filters": {
+              "title": "Filters",
+              "type": "object"
+            },
+            "limit": {
+              "default": 25,
+              "maximum": 1000,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "offset": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "search": {
+              "maxLength": 256,
+              "title": "Search",
+              "type": "string"
+            },
+            "search_fields": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Search Fields",
+              "type": "array"
+            },
+            "sort_by": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Sort By",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table"
+          ],
+          "title": "StoragePaginatedRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "ext.storage.read",
+        "response_schema": {
+          "properties": {
+            "rows_json": {
+              "default": "[]",
+              "title": "Rows Json",
+              "type": "string"
+            },
+            "total": {
+              "default": 0,
+              "title": "Total",
+              "type": "integer"
+            }
+          },
+          "title": "StoragePaginatedResponse",
+          "type": "object"
+        },
+        "sdk_name": "getPaginated",
+        "sdk_qualified_name": "storage.getPaginated"
+      },
+      {
+        "description": "Read one public row from an extension storage table.",
+        "host_interface": "host",
+        "host_name": "storage_get_public",
+        "id": "storage.get_public",
+        "name": "Get public storage row",
+        "namespace": "storage",
+        "python_name": "storage_get_public",
+        "request_schema": {
+          "properties": {
+            "id": {
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Id",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table",
+            "id"
+          ],
+          "title": "StorageGetRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "ext.storage.read_public",
+        "response_schema": {
+          "properties": {
+            "data_json": {
+              "title": "Data Json",
+              "type": "string"
+            }
+          },
+          "title": "StorageGetResponse",
+          "type": "object"
+        },
+        "sdk_name": "getPublic",
+        "sdk_qualified_name": "storage.getPublic"
+      },
+      {
+        "description": "Get filtered, searched, sorted, paginated public storage rows.",
+        "host_interface": "host",
+        "host_name": "storage_get_public_paginated",
+        "id": "storage.get_public_paginated",
+        "name": "Get paginated public storage rows",
+        "namespace": "storage",
+        "python_name": "storage_get_public_paginated",
+        "request_schema": {
+          "properties": {
+            "descending": {
+              "default": false,
+              "title": "Descending",
+              "type": "boolean"
+            },
+            "filters": {
+              "title": "Filters",
+              "type": "object"
+            },
+            "limit": {
+              "default": 25,
+              "maximum": 1000,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            },
+            "offset": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            },
+            "search": {
+              "maxLength": 256,
+              "title": "Search",
+              "type": "string"
+            },
+            "search_fields": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Search Fields",
+              "type": "array"
+            },
+            "sort_by": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Sort By",
+              "type": "string"
+            },
+            "source_id": {
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Source Id",
+              "type": "string"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table",
+            "source_id"
+          ],
+          "title": "StoragePublicPaginatedRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "ext.storage.read_public",
+        "response_schema": {
+          "properties": {
+            "rows_json": {
+              "default": "[]",
+              "title": "Rows Json",
+              "type": "string"
+            },
+            "total": {
+              "default": 0,
+              "title": "Total",
+              "type": "integer"
+            }
+          },
+          "title": "StoragePaginatedResponse",
+          "type": "object"
+        },
+        "sdk_name": "getPublicPaginated",
+        "sdk_qualified_name": "storage.getPublicPaginated"
+      },
+      {
+        "description": "Create or update one row in an extension storage table.",
+        "host_interface": "host",
+        "host_name": "storage_set",
+        "id": "storage.set",
+        "name": "Set storage row",
+        "namespace": "storage",
+        "python_name": "storage_set",
+        "request_schema": {
+          "properties": {
+            "data": {
+              "title": "Data",
+              "type": "object"
+            },
+            "table": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Table",
+              "type": "string"
+            }
+          },
+          "required": [
+            "table"
+          ],
+          "title": "StorageSetRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "ext.storage.write",
+        "response_schema": {
+          "properties": {
+            "ok": {
+              "default": true,
+              "title": "Ok",
+              "type": "boolean"
+            }
+          },
+          "title": "StorageSetResponse",
+          "type": "object"
+        },
+        "sdk_name": "set",
+        "sdk_qualified_name": "storage.set"
+      },
+      {
+        "description": "Write a bounded message to the extension log.",
+        "host_interface": "host",
+        "host_name": "log",
+        "id": "system.log",
+        "name": "Log message",
+        "namespace": "system",
+        "python_name": "system_log",
+        "request_schema": {
+          "properties": {
+            "level": {
+              "default": "info",
+              "enum": [
+                "debug",
+                "info",
+                "warning",
+                "error"
+              ],
+              "title": "Level",
+              "type": "string"
+            },
+            "message": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "title": "Message",
+              "type": "string"
+            }
+          },
+          "required": [
+            "message"
+          ],
+          "title": "LogRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": null,
+        "response_schema": {
+          "properties": {
+            "ok": {
+              "default": true,
+              "title": "Ok",
+              "type": "boolean"
+            }
+          },
+          "title": "LogResponse",
+          "type": "object"
+        },
+        "sdk_name": "log",
+        "sdk_qualified_name": "system.log"
+      },
+      {
+        "description": "Return the current Unix timestamp.",
+        "host_interface": "host",
+        "host_name": "now",
+        "id": "system.now",
+        "name": "Current timestamp",
+        "namespace": "system",
+        "python_name": "system_now",
+        "request_schema": {
+          "properties": {},
+          "title": "EmptyRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": null,
+        "response_schema": {
+          "properties": {
+            "timestamp": {
+              "title": "Timestamp",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "timestamp"
+          ],
+          "title": "NowResponse",
+          "type": "object"
+        },
+        "sdk_name": "now",
+        "sdk_qualified_name": "system.now"
+      },
+      {
+        "description": "Create a random extension-local identifier.",
+        "host_interface": "host",
+        "host_name": "random_id",
+        "id": "system.random_id",
+        "name": "Random ID",
+        "namespace": "system",
+        "python_name": "system_random_id",
+        "request_schema": {
+          "properties": {
+            "prefix": {
+              "maxLength": 32,
+              "minLength": 1,
+              "title": "Prefix",
+              "type": "string"
+            }
+          },
+          "required": [
+            "prefix"
+          ],
+          "title": "RandomIdRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": null,
+        "response_schema": {
+          "properties": {
+            "id": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "title": "RandomIdResponse",
+          "type": "object"
+        },
+        "sdk_name": "id",
+        "sdk_qualified_name": "system.id"
+      },
+      {
+        "description": "Convert between sats, BTC, and supported fiat currencies.",
+        "host_interface": "utils-currencies",
+        "host_name": "convert",
+        "id": "utils.currencies.convert",
+        "name": "Convert currency amount",
+        "namespace": "utils.currencies",
+        "python_name": "utils.currencies.convert",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "from": {
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "From",
+              "type": "string"
+            },
+            "to": {
+              "maxLength": 256,
+              "minLength": 1,
+              "title": "To",
+              "type": "string"
+            }
+          },
+          "required": [
+            "amount",
+            "from",
+            "to"
+          ],
+          "title": "CurrencyConvertRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "amounts": {
+              "items": {
+                "items": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              },
+              "title": "Amounts",
+              "type": "array"
+            }
+          },
+          "title": "CurrencyConvertResponse",
+          "type": "object"
+        },
+        "sdk_name": "convert",
+        "sdk_qualified_name": "utils.currencies.convert"
+      },
+      {
+        "description": "Convert a fiat amount to sats.",
+        "host_interface": "utils-currencies",
+        "host_name": "fiat_to_sats",
+        "id": "utils.currencies.fiat_to_sats",
+        "name": "Convert fiat to sats",
+        "namespace": "utils.currencies",
+        "python_name": "utils.currencies.fiat_to_sats",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "currency": {
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "title": "FiatToSatsRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "amount_sat": {
+              "title": "Amount Sat",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "amount_sat"
+          ],
+          "title": "FiatToSatsResponse",
+          "type": "object"
+        },
+        "sdk_name": "fiatToSats",
+        "sdk_qualified_name": "utils.currencies.fiatToSats"
+      },
+      {
+        "description": "List currencies supported by LNbits exchange-rate conversion.",
+        "host_interface": "utils-currencies",
+        "host_name": "list_currencies",
+        "id": "utils.currencies.list",
+        "name": "List currencies",
+        "namespace": "utils.currencies",
+        "python_name": "utils.currencies.list",
+        "request_schema": {
+          "properties": {},
+          "title": "EmptyRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "currencies": {
+              "items": {
+                "type": "string"
+              },
+              "title": "Currencies",
+              "type": "array"
+            }
+          },
+          "title": "CurrencyListResponse",
+          "type": "object"
+        },
+        "sdk_name": "list",
+        "sdk_qualified_name": "utils.currencies.list"
+      },
+      {
+        "description": "Get sats-per-fiat and BTC price for a currency.",
+        "host_interface": "utils-currencies",
+        "host_name": "rate",
+        "id": "utils.currencies.rate",
+        "name": "Get currency rate",
+        "namespace": "utils.currencies",
+        "python_name": "utils.currencies.rate",
+        "request_schema": {
+          "properties": {
+            "currency": {
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            }
+          },
+          "required": [
+            "currency"
+          ],
+          "title": "CurrencyRateRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "price": {
+              "title": "Price",
+              "type": "number"
+            },
+            "rate": {
+              "title": "Rate",
+              "type": "number"
+            }
+          },
+          "required": [
+            "rate",
+            "price"
+          ],
+          "title": "CurrencyRateResponse",
+          "type": "object"
+        },
+        "sdk_name": "rate",
+        "sdk_qualified_name": "utils.currencies.rate"
+      },
+      {
+        "description": "Convert a sats amount to fiat.",
+        "host_interface": "utils-currencies",
+        "host_name": "sats_to_fiat",
+        "id": "utils.currencies.sats_to_fiat",
+        "name": "Convert sats to fiat",
+        "namespace": "utils.currencies",
+        "python_name": "utils.currencies.sats_to_fiat",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "currency": {
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            }
+          },
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "title": "SatsToFiatRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "amount": {
+              "title": "Amount",
+              "type": "number"
+            }
+          },
+          "required": [
+            "amount"
+          ],
+          "title": "SatsToFiatResponse",
+          "type": "object"
+        },
+        "sdk_name": "satsToFiat",
+        "sdk_qualified_name": "utils.currencies.satsToFiat"
+      },
+      {
+        "description": "Decode a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "decode_invoice",
+        "id": "utils.lightning.decode_invoice",
+        "name": "Decode Lightning invoice",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.decode_invoice",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "amount_msat": {
+              "title": "Amount Msat",
+              "type": "integer"
+            },
+            "expires_at": {
+              "title": "Expires At",
+              "type": "integer"
+            },
+            "expiry": {
+              "title": "Expiry",
+              "type": "integer"
+            },
+            "memo": {
+              "title": "Memo",
+              "type": "string"
+            },
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "valid": {
+              "default": true,
+              "title": "Valid",
+              "type": "boolean"
+            }
+          },
+          "title": "DecodeInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "decodeInvoice",
+        "sdk_qualified_name": "utils.lightning.decodeInvoice"
+      },
+      {
+        "description": "Get the amount in msat from a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "invoice_amount_msat",
+        "id": "utils.lightning.invoice_amount_msat",
+        "name": "Get Lightning invoice amount",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.invoice_amount_msat",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "amount_msat": {
+              "title": "Amount Msat",
+              "type": "integer"
+            }
+          },
+          "title": "InvoiceAmountMsatResponse",
+          "type": "object"
+        },
+        "sdk_name": "invoiceAmountMsat",
+        "sdk_qualified_name": "utils.lightning.invoiceAmountMsat"
+      },
+      {
+        "description": "Get the expiry timestamp from a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "invoice_expiry",
+        "id": "utils.lightning.invoice_expiry",
+        "name": "Get Lightning invoice expiry",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.invoice_expiry",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "expires_at": {
+              "title": "Expires At",
+              "type": "integer"
+            }
+          },
+          "title": "InvoiceExpiryResponse",
+          "type": "object"
+        },
+        "sdk_name": "invoiceExpiry",
+        "sdk_qualified_name": "utils.lightning.invoiceExpiry"
+      },
+      {
+        "description": "Get the memo from a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "invoice_memo",
+        "id": "utils.lightning.invoice_memo",
+        "name": "Get Lightning invoice memo",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.invoice_memo",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "memo": {
+              "title": "Memo",
+              "type": "string"
+            }
+          },
+          "title": "InvoiceMemoResponse",
+          "type": "object"
+        },
+        "sdk_name": "invoiceMemo",
+        "sdk_qualified_name": "utils.lightning.invoiceMemo"
+      },
+      {
+        "description": "Get the payment hash from a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "invoice_payment_hash",
+        "id": "utils.lightning.invoice_payment_hash",
+        "name": "Get Lightning invoice payment hash",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.invoice_payment_hash",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            }
+          },
+          "required": [
+            "payment_hash"
+          ],
+          "title": "InvoicePaymentHashResponse",
+          "type": "object"
+        },
+        "sdk_name": "invoicePaymentHash",
+        "sdk_qualified_name": "utils.lightning.invoicePaymentHash"
+      },
+      {
+        "description": "Create a random secret and matching SHA256 hash.",
+        "host_interface": "utils-lightning",
+        "host_name": "random_secret_and_hash",
+        "id": "utils.lightning.random_secret_and_hash",
+        "name": "Random Lightning secret and hash",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.random_secret_and_hash",
+        "request_schema": {
+          "properties": {
+            "length": {
+              "default": 32,
+              "maximum": 64,
+              "minimum": 16,
+              "title": "Length",
+              "type": "integer"
+            }
+          },
+          "title": "RandomSecretAndHashRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "hash": {
+              "title": "Hash",
+              "type": "string"
+            },
+            "secret": {
+              "title": "Secret",
+              "type": "string"
+            }
+          },
+          "required": [
+            "secret",
+            "hash"
+          ],
+          "title": "RandomSecretAndHashResponse",
+          "type": "object"
+        },
+        "sdk_name": "randomSecretAndHash",
+        "sdk_qualified_name": "utils.lightning.randomSecretAndHash"
+      },
+      {
+        "description": "Validate whether a string is a BOLT11 Lightning invoice.",
+        "host_interface": "utils-lightning",
+        "host_name": "validate_invoice",
+        "id": "utils.lightning.validate_invoice",
+        "name": "Validate Lightning invoice",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.validate_invoice",
+        "request_schema": {
+          "properties": {
+            "bolt11": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Bolt11",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bolt11"
+          ],
+          "title": "Bolt11Request",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "error": {
+              "title": "Error",
+              "type": "string"
+            },
+            "valid": {
+              "title": "Valid",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "valid"
+          ],
+          "title": "ValidateInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "validateInvoice",
+        "sdk_qualified_name": "utils.lightning.validateInvoice"
+      },
+      {
+        "description": "Verify that a preimage matches a payment hash.",
+        "host_interface": "utils-lightning",
+        "host_name": "verify_preimage",
+        "id": "utils.lightning.verify_preimage",
+        "name": "Verify Lightning preimage",
+        "namespace": "utils.lightning",
+        "python_name": "utils.lightning.verify_preimage",
+        "request_schema": {
+          "properties": {
+            "payment_hash": {
+              "maxLength": 64,
+              "minLength": 64,
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "preimage": {
+              "maxLength": 64,
+              "minLength": 64,
+              "title": "Preimage",
+              "type": "string"
+            }
+          },
+          "required": [
+            "preimage",
+            "payment_hash"
+          ],
+          "title": "VerifyPreimageRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "valid": {
+              "title": "Valid",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "valid"
+          ],
+          "title": "VerifyPreimageResponse",
+          "type": "object"
+        },
+        "sdk_name": "verifyPreimage",
+        "sdk_qualified_name": "utils.lightning.verifyPreimage"
+      },
+      {
+        "description": "Resolve a Lightning Address or LNURL-pay request.",
+        "host_interface": "utils-lnurl",
+        "host_name": "resolve",
+        "id": "utils.lnurl.resolve",
+        "name": "Resolve LNURL-pay",
+        "namespace": "utils.lnurl",
+        "python_name": "utils.lnurl.resolve",
+        "request_schema": {
+          "properties": {
+            "lnurl": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "title": "Lnurl",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lnurl"
+          ],
+          "title": "LnurlResolveRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "wallet.pay_invoice",
+        "response_schema": {
+          "properties": {
+            "comment_allowed": {
+              "default": 0,
+              "title": "Comment Allowed",
+              "type": "integer"
+            },
+            "description": {
+              "default": "",
+              "title": "Description",
+              "type": "string"
+            },
+            "domain": {
+              "title": "Domain",
+              "type": "string"
+            },
+            "fixed": {
+              "default": false,
+              "title": "Fixed",
+              "type": "boolean"
+            },
+            "image": {
+              "title": "Image",
+              "type": "string"
+            },
+            "lnurl": {
+              "title": "Lnurl",
+              "type": "string"
+            },
+            "max_sendable_msat": {
+              "title": "Max Sendable Msat",
+              "type": "integer"
+            },
+            "metadata_json": {
+              "default": "[]",
+              "title": "Metadata Json",
+              "type": "string"
+            },
+            "min_sendable_msat": {
+              "title": "Min Sendable Msat",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "lnurl",
+            "min_sendable_msat",
+            "max_sendable_msat"
+          ],
+          "title": "LnurlResolveResponse",
+          "type": "object"
+        },
+        "sdk_name": "resolve",
+        "sdk_qualified_name": "utils.lnurl.resolve"
+      },
+      {
+        "description": "Return basic public LNbits server health data.",
+        "host_interface": "utils-server",
+        "host_name": "health",
+        "id": "utils.server.health",
+        "name": "Server health",
+        "namespace": "utils.server",
+        "python_name": "utils.server.health",
+        "request_schema": {
+          "properties": {},
+          "title": "EmptyRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "utils.basic",
+        "response_schema": {
+          "properties": {
+            "server_time": {
+              "title": "Server Time",
+              "type": "integer"
+            },
+            "up_time": {
+              "title": "Up Time",
+              "type": "string"
+            }
+          },
+          "required": [
+            "server_time",
+            "up_time"
+          ],
+          "title": "ServerHealthResponse",
+          "type": "object"
+        },
+        "sdk_name": "health",
+        "sdk_qualified_name": "utils.server.health"
+      },
+      {
+        "description": "Read the balance of a wallet available to the user.",
+        "host_interface": "host",
+        "host_name": "wallet_balance",
+        "id": "wallet.balance",
+        "name": "Read wallet balance",
+        "namespace": "wallet",
+        "python_name": "wallet_balance",
+        "request_schema": {
+          "properties": {
+            "wallet_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Wallet Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "wallet_id"
+          ],
+          "title": "WalletBalanceRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "wallet.balance.read",
+        "response_schema": {
+          "properties": {
+            "balance_msat": {
+              "title": "Balance Msat",
+              "type": "integer"
+            },
+            "balance_sat": {
+              "title": "Balance Sat",
+              "type": "integer"
+            },
+            "can_send_payments": {
+              "title": "Can Send Payments",
+              "type": "boolean"
+            },
+            "currency": {
+              "title": "Currency",
+              "type": "string"
+            },
+            "fee_reserve_msat": {
+              "title": "Fee Reserve Msat",
+              "type": "integer"
+            },
+            "fee_reserve_sat": {
+              "title": "Fee Reserve Sat",
+              "type": "integer"
+            },
+            "name": {
+              "title": "Name",
+              "type": "string"
+            },
+            "wallet_id": {
+              "title": "Wallet Id",
+              "type": "string"
+            },
+            "withdrawable_msat": {
+              "title": "Withdrawable Msat",
+              "type": "integer"
+            },
+            "withdrawable_sat": {
+              "title": "Withdrawable Sat",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "wallet_id",
+            "name",
+            "balance_msat",
+            "balance_sat",
+            "withdrawable_msat",
+            "withdrawable_sat",
+            "fee_reserve_msat",
+            "fee_reserve_sat",
+            "can_send_payments"
+          ],
+          "title": "WalletBalanceResponse",
+          "type": "object"
+        },
+        "sdk_name": "balance",
+        "sdk_qualified_name": "wallet.balance"
+      },
+      {
+        "description": "Create an incoming Lightning invoice for an allowed wallet.",
+        "host_interface": "host",
+        "host_name": "create_invoice",
+        "id": "wallet.create_invoice",
+        "name": "Create invoice",
+        "namespace": "wallet",
+        "python_name": "wallet_create_invoice",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "currency": {
+              "default": "sat",
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            },
+            "extra": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Extra",
+              "type": "object"
+            },
+            "memo": {
+              "maxLength": 512,
+              "title": "Memo",
+              "type": "string"
+            },
+            "tag": {
+              "maxLength": 64,
+              "minLength": 1,
+              "title": "Tag",
+              "type": "string"
+            },
+            "wallet_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Wallet Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "wallet_id",
+            "amount",
+            "memo",
+            "tag"
+          ],
+          "title": "CreateInvoiceRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "wallet.create_invoice",
+        "response_schema": {
+          "properties": {
+            "checking_id": {
+              "title": "Checking Id",
+              "type": "string"
+            },
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "payment_request": {
+              "title": "Payment Request",
+              "type": "string"
+            }
+          },
+          "required": [
+            "payment_hash",
+            "payment_request",
+            "checking_id"
+          ],
+          "title": "CreateInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "createInvoice",
+        "sdk_qualified_name": "wallet.createInvoice"
+      },
+      {
+        "description": "Create a public incoming Lightning invoice.",
+        "host_interface": "host",
+        "host_name": "create_invoice_public",
+        "id": "wallet.create_invoice_public",
+        "name": "Create public invoice",
+        "namespace": "wallet",
+        "python_name": "wallet_create_invoice_public",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "currency": {
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            },
+            "extra": {
+              "title": "Extra",
+              "type": "object"
+            },
+            "memo": {
+              "default": "",
+              "maxLength": 512,
+              "title": "Memo",
+              "type": "string"
+            },
+            "source_id": {
+              "description": "The source ID (entry id) of the wallet to create the invoice for.",
+              "maxLength": 512,
+              "minLength": 1,
+              "title": "Source Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_id",
+            "amount",
+            "currency"
+          ],
+          "title": "CreateInvoicePublicRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "wallet.create_invoice_public",
+        "response_schema": {
+          "properties": {
+            "checking_id": {
+              "title": "Checking Id",
+              "type": "string"
+            },
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "payment_request": {
+              "title": "Payment Request",
+              "type": "string"
+            }
+          },
+          "required": [
+            "payment_hash",
+            "payment_request",
+            "checking_id"
+          ],
+          "title": "CreateInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "createInvoicePublic",
+        "sdk_qualified_name": "wallet.createInvoicePublic"
+      },
+      {
+        "description": "List wallets available to the authenticated extension user.",
+        "host_interface": "host",
+        "host_name": "list_user_wallets",
+        "id": "wallet.list_user_wallets",
+        "name": "List user wallets",
+        "namespace": "wallet",
+        "python_name": "wallet_list_user_wallets",
+        "request_schema": {
+          "properties": {},
+          "title": "EmptyRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": "wallet.list",
+        "response_schema": {
+          "definitions": {
+            "UserWalletSummary": {
+              "properties": {
+                "currency": {
+                  "title": "Currency",
+                  "type": "string"
+                },
+                "id": {
+                  "title": "Id",
+                  "type": "string"
+                },
+                "name": {
+                  "title": "Name",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ],
+              "title": "UserWalletSummary",
+              "type": "object"
+            }
+          },
+          "properties": {
+            "wallets": {
+              "items": {
+                "$ref": "#/definitions/UserWalletSummary"
+              },
+              "title": "Wallets",
+              "type": "array"
+            }
+          },
+          "title": "ListUserWalletsResponse",
+          "type": "object"
+        },
+        "sdk_name": "listUserWallets",
+        "sdk_qualified_name": "wallet.listUserWallets"
+      },
+      {
+        "description": "Pay a Lightning invoice from a wallet available to the user.",
+        "host_interface": "host",
+        "host_name": "pay_invoice",
+        "id": "wallet.pay_invoice",
+        "name": "Pay invoice",
+        "namespace": "wallet",
+        "python_name": "wallet_pay_invoice",
+        "request_schema": {
+          "properties": {
+            "description": {
+              "default": "",
+              "maxLength": 512,
+              "title": "Description",
+              "type": "string"
+            },
+            "extra": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Extra",
+              "type": "object"
+            },
+            "max_sat": {
+              "exclusiveMinimum": 0,
+              "title": "Max Sat",
+              "type": "integer"
+            },
+            "payment_request": {
+              "maxLength": 8192,
+              "minLength": 1,
+              "title": "Payment Request",
+              "type": "string"
+            },
+            "wallet_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Wallet Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "wallet_id",
+            "payment_request"
+          ],
+          "title": "PayInvoiceRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": null,
+        "response_schema": {
+          "properties": {
+            "amount_msat": {
+              "default": 0,
+              "title": "Amount Msat",
+              "type": "integer"
+            },
+            "checking_id": {
+              "title": "Checking Id",
+              "type": "string"
+            },
+            "error": {
+              "title": "Error",
+              "type": "string"
+            },
+            "fee_msat": {
+              "default": 0,
+              "title": "Fee Msat",
+              "type": "integer"
+            },
+            "ok": {
+              "default": true,
+              "title": "Ok",
+              "type": "boolean"
+            },
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "payment_request": {
+              "title": "Payment Request",
+              "type": "string"
+            },
+            "pending": {
+              "default": false,
+              "title": "Pending",
+              "type": "boolean"
+            },
+            "status": {
+              "title": "Status",
+              "type": "string"
+            },
+            "success": {
+              "default": false,
+              "title": "Success",
+              "type": "boolean"
+            }
+          },
+          "title": "PayInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "payInvoice",
+        "sdk_qualified_name": "wallet.payInvoice"
+      },
+      {
+        "description": "Pay a Lightning Address or LNURL-pay request from a wallet.",
+        "host_interface": "host",
+        "host_name": "pay_lnurl",
+        "id": "wallet.pay_lnurl",
+        "name": "Pay LNURL",
+        "namespace": "wallet",
+        "python_name": "wallet_pay_lnurl",
+        "request_schema": {
+          "properties": {
+            "amount": {
+              "exclusiveMinimum": 0,
+              "title": "Amount",
+              "type": "number"
+            },
+            "comment": {
+              "maxLength": 512,
+              "title": "Comment",
+              "type": "string"
+            },
+            "currency": {
+              "default": "sat",
+              "maxLength": 8,
+              "minLength": 1,
+              "title": "Currency",
+              "type": "string"
+            },
+            "description": {
+              "default": "",
+              "maxLength": 512,
+              "title": "Description",
+              "type": "string"
+            },
+            "extra": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "title": "Extra",
+              "type": "object"
+            },
+            "fetch_only": {
+              "default": false,
+              "title": "Fetch Only",
+              "type": "boolean"
+            },
+            "lnurl": {
+              "maxLength": 2048,
+              "minLength": 1,
+              "title": "Lnurl",
+              "type": "string"
+            },
+            "max_sat": {
+              "exclusiveMinimum": 0,
+              "title": "Max Sat",
+              "type": "integer"
+            },
+            "wallet_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Wallet Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "wallet_id",
+            "lnurl",
+            "amount"
+          ],
+          "title": "PayLnurlRequest",
+          "type": "object"
+        },
+        "require_auth": true,
+        "required_permission": null,
+        "response_schema": {
+          "properties": {
+            "amount_msat": {
+              "default": 0,
+              "title": "Amount Msat",
+              "type": "integer"
+            },
+            "checking_id": {
+              "title": "Checking Id",
+              "type": "string"
+            },
+            "error": {
+              "title": "Error",
+              "type": "string"
+            },
+            "fee_msat": {
+              "default": 0,
+              "title": "Fee Msat",
+              "type": "integer"
+            },
+            "ok": {
+              "default": true,
+              "title": "Ok",
+              "type": "boolean"
+            },
+            "payment_hash": {
+              "title": "Payment Hash",
+              "type": "string"
+            },
+            "payment_request": {
+              "title": "Payment Request",
+              "type": "string"
+            },
+            "pending": {
+              "default": false,
+              "title": "Pending",
+              "type": "boolean"
+            },
+            "status": {
+              "title": "Status",
+              "type": "string"
+            },
+            "success": {
+              "default": false,
+              "title": "Success",
+              "type": "boolean"
+            }
+          },
+          "title": "PayInvoiceResponse",
+          "type": "object"
+        },
+        "sdk_name": "payLnurl",
+        "sdk_qualified_name": "wallet.payLnurl"
+      },
+      {
+        "description": "Publish a JSON message on an extension-local websocket channel.",
+        "host_interface": "host",
+        "host_name": "websocket_publish",
+        "id": "websocket.publish",
+        "name": "Publish websocket message",
+        "namespace": "websocket",
+        "python_name": "websocket_publish",
+        "request_schema": {
+          "properties": {
+            "data": {
+              "title": "Data"
+            },
+            "item_id": {
+              "maxLength": 128,
+              "minLength": 1,
+              "title": "Item Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "item_id"
+          ],
+          "title": "WebsocketPublishRequest",
+          "type": "object"
+        },
+        "require_auth": false,
+        "required_permission": "websocket.publish",
+        "response_schema": {
+          "properties": {
+            "sent": {
+              "default": true,
+              "title": "Sent",
+              "type": "boolean"
+            }
+          },
+          "title": "WebsocketPublishResponse",
+          "type": "object"
+        },
+        "sdk_name": "publish",
+        "sdk_qualified_name": "websocket.publish"
+      }
+    ],
+    "version": 1
+  },
+  "iframe_core_assets": {
+    "bundle.min.css": {
+      "content_type": "text/css; charset=utf-8",
+      "source": "static/bundle.min.css"
+    },
+    "material-icons-v50.woff2": {
+      "content_type": "font/woff2",
+      "source": "static/fonts/material-icons-v50.woff2"
+    },
+    "material-icons.css": {
+      "content_type": "text/css; charset=utf-8",
+      "generated": true
+    },
+    "qrcode.vue.browser.js": {
+      "content_type": "text/javascript; charset=utf-8",
+      "source": "static/vendor/qrcode.vue.browser.js"
+    },
+    "quasar.css": {
+      "content_type": "text/css; charset=utf-8",
+      "source": "static/vendor/quasar.css"
+    },
+    "quasar.umd.prod.js": {
+      "content_type": "text/javascript; charset=utf-8",
+      "source": "static/vendor/quasar.umd.prod.js"
+    },
+    "vue.global.prod.js": {
+      "content_type": "text/javascript; charset=utf-8",
+      "source": "static/vendor/vue.global.prod.js"
+    }
+  },
+  "permission_ids": [
+    "ext.storage.append_public",
+    "ext.storage.read",
+    "ext.storage.read_public",
+    "ext.storage.write",
+    "extension.api.request",
+    "http.request",
+    "notifications.send_user_notification",
+    "ui.camera.scan_qr",
+    "utils.basic",
+    "wallet.balance.read",
+    "wallet.create_invoice",
+    "wallet.create_invoice_public",
+    "wallet.list",
+    "wallet.pay_invoice",
+    "wallet.pay_invoice_background",
+    "wallet.payments.watch",
+    "websocket.publish",
+    "websocket.subscribe"
+  ],
+  "root": "/home/talvasconcelos/Work/lnbits_pg"
+}

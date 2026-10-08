@@ -1,0 +1,222 @@
+{
+  "version": 3,
+  "tables": {
+    "towers": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "source_id",
+          "type": "string"
+        },
+        {
+          "name": "continue_enabled",
+          "type": "boolean"
+        },
+        {
+          "name": "continue_price",
+          "type": "integer"
+        },
+        {
+          "name": "checkpoint_frequency",
+          "type": "integer"
+        },
+        {
+          "name": "difficulty",
+          "type": "number"
+        },
+        {
+          "name": "daily_challenge",
+          "type": "boolean"
+        },
+        {
+          "name": "leaderboard_enabled",
+          "type": "boolean"
+        }
+      ]
+    },
+    "invoice_sources": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "tower_id",
+          "type": "string"
+        },
+        {
+          "name": "wallet_id",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "integer"
+        },
+        {
+          "name": "frequency",
+          "type": "integer"
+        }
+      ]
+    },
+    "settings": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "tower_id",
+          "type": "string"
+        }
+      ]
+    },
+    "records": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "record_json",
+          "type": "string"
+        }
+      ]
+    },
+    "receipts": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "tower_id",
+          "type": "string"
+        },
+        {
+          "name": "checkpoint",
+          "type": "integer"
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "run_nodes": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "tower_id",
+          "type": "string"
+        },
+        {
+          "name": "token",
+          "type": "string"
+        },
+        {
+          "name": "root_id",
+          "type": "string"
+        },
+        {
+          "name": "day",
+          "type": "string"
+        },
+        {
+          "name": "started",
+          "type": "integer"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "state_json",
+          "type": "string"
+        },
+        {
+          "name": "resume_key",
+          "type": "string",
+          "default": ""
+        },
+        {
+          "name": "signing_key",
+          "type": "string",
+          "default": ""
+        }
+      ]
+    },
+    "scores": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "tower_id",
+          "type": "string"
+        },
+        {
+          "name": "root_id",
+          "type": "string"
+        },
+        {
+          "name": "day",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "floor",
+          "type": "integer"
+        },
+        {
+          "name": "time_ms",
+          "type": "integer"
+        },
+        {
+          "name": "score",
+          "type": "integer"
+        },
+        {
+          "name": "rank_key",
+          "type": "integer"
+        },
+        {
+          "name": "rules",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "indexes": [
+    {
+      "table": "run_nodes",
+      "name": "run_nodes_tower_id",
+      "field": "tower_id"
+    },
+    {
+      "table": "scores",
+      "name": "scores_tower_id",
+      "field": "tower_id"
+    },
+    {
+      "table": "scores",
+      "name": "scores_day",
+      "field": "day"
+    },
+    {
+      "table": "run_nodes",
+      "name": "run_nodes_resume_key",
+      "field": "resume_key"
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+{
+  "schemas": {
+    "PersonalRecord": {
+      "type": "object",
+      "properties": {
+        "bestFloor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "bestScore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "totalTime": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "runs": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        },
+        "milestones": {
+          "type": "object",
+          "maxProperties": 100,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 86400
+          }
+        }
+      },
+      "required": [
+        "bestFloor",
+        "bestScore",
+        "totalTime",
+        "runs"
+      ]
+    }
+  },
+  "routes": {
+    "operator-config": {
+      "summary": "Read or save your circuit; wallet ownership checked",
+      "operationId": "satrun_operator_config",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "save": {
+                  "type": "boolean"
+                },
+                "settings": {
+                  "type": "object",
+                  "properties": {
+                    "continueEnabled": {
+                      "type": "boolean"
+                    },
+                    "continuePrice": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100000
+                    },
+                    "checkpointFrequency": {
+                      "type": "integer",
+                      "minimum": 5,
+                      "maximum": 50
+                    },
+                    "difficulty": {
+                      "enum": [
+                        0.8,
+                        1,
+                        1.2
+                      ]
+                    },
+                    "dailyChallenge": {
+                      "type": "boolean"
+                    },
+                    "leaderboardEnabled": {
+                      "type": "boolean"
+                    },
+                    "walletId": {
+                      "type": "string",
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "continueEnabled",
+                    "continuePrice",
+                    "checkpointFrequency",
+                    "difficulty",
+                    "dailyChallenge",
+                    "leaderboardEnabled"
+                  ]
+                }
+              },
+              "required": []
+            }
+          }
+        }
+      }
+    },
+    "get-record": {
+      "summary": "Owner-scoped personal practice records",
+      "operationId": "satrun_get_record",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      }
+    },
+    "save-record": {
+      "summary": "Merge unranked personal records",
+      "operationId": "satrun_save_record",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "record": {
+                  "$ref": "#/schemas/PersonalRecord"
+                }
+              },
+              "required": [
+                "record"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tower-info": {
+      "summary": "Public circuit settings; excludes receiving wallet",
+      "operationId": "satrun_tower_info",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "towerId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                }
+              },
+              "required": [
+                "towerId"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "begin-run": {
+      "summary": "Start a free run, or resume a verified checkpoint",
+      "operationId": "satrun_begin_run",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "towerId": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "resume": {
+                  "type": "boolean"
+                },
+                "runId": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "paymentHash": {
+                  "type": "string"
+                }
+              },
+              "description": "Fresh runs need towerId/name and start with one total life, consumed on death. Pickups add lives or 5-second flight. Resumes need resume=true, runId/token. paymentHash is required when no lives remain."
+            }
+          }
+        }
+      }
+    },
+    "verify-run": {
+      "summary": "Check checkpoint/death progress, timing and seeded pickups",
+      "operationId": "satrun_verify_run",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "runId": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                },
+                "event": {
+                  "type": "string",
+                  "enum": [
+                    "checkpoint",
+                    "death"
+                  ]
+                },
+                "floor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 10000
+                },
+                "elapsed": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1800
+                },
+                "highestTime": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1800
+                },
+                "collected": {
+                  "type": "array",
+                  "maxItems": 512,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 16,
+                    "maximum": 40000
+                  }
+                }
+              },
+              "required": [
+                "runId",
+                "token",
+                "event",
+                "floor",
+                "elapsed",
+                "highestTime",
+                "collected"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "finish-run": {
+      "summary": "Publish backend-calculated result of a completed free daily run",
+      "operationId": "satrun_finish_run",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "runId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                },
+                "token": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                }
+              },
+              "required": [
+                "runId",
+                "token"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "leaderboard": {
+      "summary": "Top 20 verified runs for this circuit and UTC day",
+      "operationId": "satrun_leaderboard",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "towerId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                },
+                "day": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                }
+              },
+              "required": [
+                "towerId"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "continue-invoice": {
+      "summary": "Fixed-price invoice for the verified run checkpoint",
+      "operationId": "satrun_continue_invoice",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "runId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                },
+                "token": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                }
+              },
+              "required": [
+                "runId",
+                "token"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "continue-status": {
+      "summary": "Check the backend paid receipt",
+      "operationId": "satrun_continue_status",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      },
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paymentHash": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{8,90}$"
+                }
+              },
+              "required": [
+                "paymentHash"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "game-info": {
+      "summary": "UTC daily seed and game defaults",
+      "operationId": "satrun_game_info",
+      "responses": {
+        "200": {
+          "description": "JSON envelope: ok/data or ok/error. Run secrets are returned only to the caller starting or continuing verification."
+        }
+      }
+    }
+  }
+}

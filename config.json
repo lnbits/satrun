@@ -2,7 +2,7 @@
   "id": "satrun",
   "name": "Sat Run",
   "short_description": "Climb the light circuit. Outrun the void. One more floor.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "extension_type": "wasm",
   "tile": "/ext-assets/satrun/assets/icon.png",
   "wasm": {

@@ -138,3 +138,10 @@ Reload the existing circuit link and start fresh. Remaining runtime pool bug can
 - GitHub Actions/marketplace automation remain unexecuted; configure `EXT_GITHUB` in the destination repository. Upstream runtime connection reuse is still needed for sustained PostgreSQL play. Existing actual-WASM, SQLite, PostgreSQL and payment evidence above applies to the unchanged component.
 
 User subsequently supplied `https://github.com/lnbits/satrun.git`; local origin added and verified. No commits/pushes/tags/releases created.
+
+## Version 0.1.1 and release workflow — 2026-10-08
+
+- User requested 0.1.1 and the exact Bean Show release workflow after the marketplace checkout received an empty token. Copied Bean Show's release workflow byte-for-byte, retaining its `secrets.EXT_GITHUB` setting. Restored independent main/tag build triggers. GitHub's organization-secret API now lists EXT_GITHUB as available to Sat Run; no secret value was read or changed.
+- Config and game-info versions both 0.1.1. Full pinned build, domain/version tests, request-queue tests, seven local release-gate cases and packaging checks pass. Rebuilt component SHA256 `87cbfea7d511321c33df056c594c69fa56b1a105834b037f1377abaaf31e7e3c`.
+- Isolated target LNbits loaded the rebuilt component and returned version 0.1.1 through `/info`; existing owner/circuit settings loaded. Test server stopped. No gameplay, payment, schema or public README changes.
+- Install ZIP: `dist/satrun-0.1.1.zip`, 18 runtime files, archive SHA256 `8bb75ed005e71781184a8f357fd100ecb54df92662ef971d86bdc97ab3036fbb`. New GitHub CI outcome pending at commit time.

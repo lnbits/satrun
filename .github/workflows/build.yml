@@ -1,10 +1,7 @@
 name: Build WASM extension
 
 on:
-  workflow_call:
   push:
-    branches-ignore: [main]
-    tags-ignore: ['**']
     paths:
       - 'config.json'
       - 'manifest.json'
